@@ -1,0 +1,23 @@
+sudo: required
+language: generic 
+services:
+  - docker
+
+before_install:
+  - docker build -t shaibad/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true shaibad/react-test npm test
+
+after_success:
+  - docker build -t shaibad/multi-client ./client
+  - docker build -t shaibad/multi-nginx ./nginx
+  - docker build -t shaibad/multi-server ./server
+  - docker build -t shaibad/multi-worker ./worker
+  # Log in to the Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to Docker hub
+  - docker push shaibad/multi-client
+  - docker push shaibad/multi-nginx
+  - docker push shaibad/multi-server
+  - docker push shaibad/multi-worker
