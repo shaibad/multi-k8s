@@ -10,6 +10,6 @@ docker push shaibad/multi-server:$SHA
 docker push shaibad/multi-worker:$SHA
 
 kubectl apply -f k8s
-kubectl set image deployments/server-deployemnt server=shaibad/multi-server:$SHA
-kubectl set image deployments/client-deployemnt server=shaibad/multi-client:$SHA
-kubectl set image deployments/worker-deployemnt server=shaibad/multi-worker:$SHA
+kubectl set image deployments/server-deployment server=shaibad/multi-server:$SHA
+kubectl set image deployments/client-deployment server=shaibad/multi-client:$SHA
+kubectl set image deployments/worker-deployment server=shaibad/multi-worker:$SHA
